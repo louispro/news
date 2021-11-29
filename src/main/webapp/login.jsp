@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 request.setCharacterEncoding("UTF-8");
@@ -70,7 +70,7 @@ request.setCharacterEncoding("UTF-8");
 				<!--登录-->
 				<div class="qlogin" id="qlogin">
 					<div class="web_login" align="center">
-						<form action="${pageContext.request.contextPath}/login.action" method="post"  onsubmit="return checkValue()">
+						<form action="${pageContext.request.contextPath}/login" method="post"  onsubmit="return checkValue()">
 						<font style="color:#ff0000;font-size:16px;">${msg }</font>
 						<div style="height:10px;"></div>
 							<div class="uname" class="input-group">

@@ -18,7 +18,7 @@
     <!-- 数据源 -->
     <bean id="c3p0" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="user" value="${jdbc.user}"/>
-        <property name="password" value="${jdbc.password"/>
+        <property name="password" value="${jdbc.password}"/>
         <property name="jdbcUrl" value="${jdbc.url}"/>
         <property name="driverClass" value="${jdbc.driver}"/>
     </bean>
@@ -27,7 +27,7 @@
     <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
         <property name="mapperLocations" value="classpath:com/louis/news/mapper/*.xml"/>
-        <property name="dataSource" value="c3p0"/>
+        <property name="dataSource" ref="c3p0"/>
     </bean>
     
     <!-- dao接口 -->

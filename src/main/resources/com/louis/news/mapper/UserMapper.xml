@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybaits//DTD Mapper 3.0//EN"
+        "http://mybatis/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.louis.news.mapper.UserMapper">
+
+    <!-- 查询所有用户集合的where语句 -->
+    <sql id="selectUserListWhere">
+        <where>
+            u.roleId = r.roleId
+            <if test="keywords!=null and keywords!=''">
+                and (u.userName like CONCAT('%',#{keywords},'%') or
+                u.loginName like CONCAT('%',#{keywords},'%'))
+            </if>
+            <if test="userListRoleId!=null and userListRoleId!=''">
+                and (u.roleId = #{userListRoleId})
+            </if>
+        </where>
+    </sql>
+
+    <!-- 用户字段 -->
+    <sql id="userColumns">
+        userId,userName,loginName,password,roleId,tel,registerTime,status
+    </sql>
+
+
+
+    <!-- 查询所有用户集合列表 -->
+    <select id="selectUserList" parameterType="String" resultType="user">
+        select u.*,roleName from t_user as u,t_role as r
+        <include refid="selectUserListWhere"/>
+        order by registerTime desc
+    </select>
+
+    <!-- 通过账号和密码查询用户 -->
+    <select id="findUser" parameterType="String" resultType="user">
+        select
+        <include refid="userColumns"/>
+        from t_user
+        where loginName=#{loginName} and password=#{password}
+        limit 0,1
+    </select>
+
+    <!-- 通过UserId查询用户 -->
+    <select id="getUserByUserId" parameterType="Integer" resultType="user">
+        select
+        <include refid="userColumns"/>
+        where userId=#{userId}
+    </select>
+
+    <!-- 通过用户登录名查询用户 -->
+    <select id="getUserByLoginName" parameterType="String" resultType="user">
+        select
+        <include refid="userColumns"/>
+        where loginName=#{loginName}
+        limit 0,1
+    </select>
+
+    <!-- 添加用户 -->
+    <insert id="addUser" parameterType="user">
+        insert into t_user(
+            userName,
+            loginName,
+            password,
+            roleId,
+            tel,
+            registerTime,
+            status
+        ) values
+        (
+            #{userName},
+            #{loginName},
+            #{password},
+            #{roleId},
+            #{tel},
+            #{registerTime},
+            #{status}
+        )
+    </insert>
+
+    <!-- 更新用户 -->
+    <update id="updateUser" parameterType="user">
+        update t_user
+        <set>
+            registerTime=#{registerTime},
+            status=#{status},
+            <if test="userName!=null and userName!=''">
+                userName=#{userName},
+            </if>
+            <if test="loginName!=null and loginName!=''">
+                loginName=#{loginName},
+            </if>
+            <if test="password!=null and password!=''">
+                password=#{password}
+            </if>
+            <if test="tel!=null and tel!=''">
+                tel=#{tel}
+            </if>
+            <if test="roleId!=null and roleId!=''">
+                roleId=#{roleId}
+            </if>
+        </set>
+        where userId=#{userId}
+    </update>
+
+    <!-- 删除用户 -->
+    <delete id="delUser" parameterType="Integer">
+        delete from t_user where userId=#{userId}
+    </delete>
+
+    <!-- 设置用户状态 -->
+    <update id="setUserStatus" parameterType="user">
+        update t_user set status=#{status} where userId=#{userId}
+    </update>
+</mapper>

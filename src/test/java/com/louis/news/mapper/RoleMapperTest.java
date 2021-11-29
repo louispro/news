@@ -15,8 +15,10 @@ public class RoleMapperTest {
     @Autowired
     private RoleMapper roleMapper;
 
+
+
     @Test
-    public void getRoleById() {
-        System.out.println(roleMapper.getRoleById(1001));
+    public void selectRoleList() {
+        System.out.println(roleMapper.selectRoleList());
     }
 }

@@ -1,5 +1,7 @@
 package com.louis.news.pojo;
 
+import java.util.List;
+
 /**
  * 赖小燚
  * www.louis.com
@@ -7,6 +9,16 @@ package com.louis.news.pojo;
 public class Role {
     private Integer roleId;
     private String roleName;
+    private List<User> userList;
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
 
     public Integer getRoleId() {
         return roleId;
@@ -29,6 +41,7 @@ public class Role {
         return "Role{" +
                 "roleId=" + roleId +
                 ", roleName='" + roleName + '\'' +
+                ", userList=" + userList +
                 '}';
     }
 }
